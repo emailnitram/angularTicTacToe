@@ -11,10 +11,10 @@
   <h2>Current Player {{ currentPlayer }}</h2>
 </div>
 <div class="board">
-  <div class="row"><div id="1"></div><div id="2"></div><div id="3"></div></div>
-  <div class="row"><div id="4"></div><div id="5"></div><div id="6"></div></div>
-  <div class="row"><div id="7"></div><div id="8"></div><div id="9"></div></div>
-</div> 
+  <div class="row"><div ng-click="attemptMove(1)">{{marks[1]}}</div><div ng-click="attemptMove(2)">{{marks[2]}}</div><div ng-click="attemptMove(3)">{{marks[3]}}</div></div>
+  <div class="row"><div ng-click="attemptMove(4)">{{marks[4]}}</div><div ng-click="attemptMove(5)">{{marks[5]}}</div><div ng-click="attemptMove(6)">{{marks[6]}}</div></div>
+  <div class="row"><div ng-click="attemptMove(7)">{{marks[7]}}</div><div ng-click="attemptMove(8)">{{marks[8]}}</div><div ng-click="attemptMove(9)">{{marks[9]}}</div></div>
+</div>
 <script src="ticTacToe.js"></script>
 </body>
 </html>

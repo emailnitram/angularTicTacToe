@@ -4,6 +4,8 @@
 }
 
 .row div {
+  text-align: center;
+  font-size: 170px;
   border: 2px solid black;
   float: left;
   width: 200px;

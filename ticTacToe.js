@@ -3,8 +3,12 @@ var app = angular.module('ticTacToe',[]);
 app.controller('MainController',
 function($scope) {
   $scope.currentPlayer = 'X';
-  $scope.isCapitalized = function(str) { return str[0] == str[0].toUpperCase(); }
-// Set up a watch 
+  $scope.marks = [];
+  $scope.attemptMove = function(num){
+    if($scope.marks[num]) return;
+    $scope.marks[num] = $scope.currentPlayer;
+    $scope.currentPlayer = $scope.currentPlayer === 'X' ? 'O' : 'X';
+  };
  });
 
 app.filter('capitalize', function(){
@@ -15,14 +19,13 @@ app.filter('capitalize', function(){
   }
 });
 
-app.directive('myDirective', function(){
+app.directive('boardSquare', function(){
   return {
     restrict: 'A',
     replace: true,
     scope: {
-      myUrl: '=someAttr',
-      myLinkText: '@'
+      num: '@'
     },
-    template: '<div><label>My URL Field:</label><input type="text" ng-model="myUrl"><a href="{{myUrl}}">{{myLinkText}}</a></div>'
+    template: '<div id="{{num}}">{{mark.one}}</div>'
   }
 })
