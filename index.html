@@ -7,8 +7,9 @@
 </head>
 <body ng-controller="MainController">
 <div>
+  <h1 ng-show="winner" id="winner">Winner: {{ winner }}!</h1>
   <h1>Tic Tac Toe</h1>
-  <h2>Current Player {{ currentPlayer }}</h2>
+  <h2>Current Player {{ currentPlayer }} </h2>
 </div>
 <div class="board">
   <div class="row"><div ng-click="attemptMove(0,0)">{{marks[0][0]}}</div><div ng-click="attemptMove(0,1)">{{marks[0][1]}}</div><div ng-click="attemptMove(0,2)">{{marks[0][2]}}</div></div>

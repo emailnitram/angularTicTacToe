@@ -11,3 +11,9 @@
   width: 200px;
   height: 200px
 }
+
+#winner {
+  position: absolute;
+  top: 10px;
+  left: 400px;
+}
