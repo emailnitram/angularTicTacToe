@@ -29,11 +29,8 @@ app.controller('MainController', function($scope) {
     var col2 = [row0[2],row1[2],row2[2]];
 
     function checkRow(row){
-      var x = 0;
-      for(var i = 0; i < row.length; i++){
-        if(row[i] === 'X') x++;
-      }
-      return x > 1;
+      var matches = row.join('').match(/X/g);
+      return matches && matches.length > 1;
     };
     function blockRow(rownum,row){
       for(var i = 0; i < 3; i++){
@@ -41,11 +38,8 @@ app.controller('MainController', function($scope) {
       }
     };
     function checkCol(col){
-      var x = 0;
-      for(var i = 0; i < col.length; i++){
-        if(col[i] === 'X') x++;
-      }
-      return x > 1;
+      var matches = col.join('').match(/X/g);
+      return matches && matches.length > 1;
     };
     function blockCol(colnum,column){
       for(var i = 0; i < 3; i++){
@@ -78,13 +72,13 @@ app.controller('MainController', function($scope) {
     var middles = [$scope.marks[0][1],$scope.marks[1][0],$scope.marks[1][2],$scope.marks[2][1]];
     var middleLocs = [[0,1],[1,2],[1,2],[2,1]];
     for(var i = 0; i < corners.length; i++){
-      if(corners[i] === undefined){
+      if(!corners[i]){
         $scope.attemptMove(locations[i][0],locations[i][1])
         return;
       }
     }
     for(var i = 0; i < middles.length; i++){
-      if(middles[i] === undefined){
+      if(!middles[i]){
         $scope.attemptMove(middleLocs[i][0],middleLocs[i][1])
         return;
       }
@@ -105,53 +99,28 @@ app.controller('MainController', function($scope) {
 
   // Check the board for possible win combinations
   $scope.checkForWinner = function(){
-    var row0 = $scope.marks[0];
-    var row1 = $scope.marks[1];
-    var row2 = $scope.marks[2];
-    var col0 = [row0[0],row1[0],row2[0]];
-    var col1 = [row0[1],row1[1],row2[1]];
-    var col2 = [row0[2],row1[2],row2[2]];
-    var rightDiag = [row0[0],row1[1],row2[2]];
-    var leftDiag = [row0[2],row1[1],row2[0]];
-    var o = 0;
-    row0.forEach(function(elem){
-      if(elem === 'O') o++;
-      if(o === 3) $scope.winner = 'O';
-    });
-    o = 0;
-    row1.forEach(function(elem){
-      if(elem === 'O') o++;
-      if(o === 3) $scope.winner = 'O';
-    });
-    o = 0;
-    row2.forEach(function(elem){
-      if(elem === 'O') o++;
-      if(o === 3) $scope.winner = 'O';
-    });
-    o = 0;
-    col0.forEach(function(elem){
-      if(elem === 'O') o++;
-      if(o === 3) $scope.winner = 'O';
-    });
-    o = 0;
-    col1.forEach(function(elem){
-      if(elem === 'O') o++;
-      if(o === 3) $scope.winner = 'O';
-    });
-    o = 0;
-    col2.forEach(function(elem){
-      if(elem === 'O') o++;
-      if(o === 3) $scope.winner = 'O';
-    });
-    o = 0;
-    rightDiag.forEach(function(elem){
-      if(elem === 'O') o++;
-      if(o === 3) $scope.winner = 'O';
-    });
-    o = 0;
-    leftDiag.forEach(function(elem){
-      if(elem === 'O') o++;
-      if(o === 3) $scope.winner = 'O';
-    });
+    var cols = [[],[],[]];
+    for (var row = 0; row < 3; row++) {
+      // Check each row
+      var matches = $scope.marks[row].join('').match(/O/g);
+      if (!$scope.winner && matches && matches.length === 3) {
+        $scope.winner = 'O';
+      }
+      for (var colCache = 0; colCache < 3; colCache++) {
+        cols[colCache].push($scope.marks[row][colCache])
+      }
+    }
+    for (var col = 0; col < 3; col++) {
+      // Check each column
+      var matches = $scope.marks[col].join('').match(/O/g);
+      if (!$scope.winner && matches && matches.length === 3) {
+        $scope.winner = 'O';
+      }
+    }
+    var rightDiag = [$scope.marks[0][0],$scope.marks[1][1],$scope.marks[2][2]].join('').match(/O/g);
+    var leftDiag = [$scope.marks[0][2],$scope.marks[1][1],$scope.marks[2][0]].join('').match(/O/g);
+    if (!$scope.winner && ((rightDiag && rightDiag.length === 3) || (leftDiag && leftDiag.length === 3))) {
+      $scope.winner = 'O';
+    }
   };
  });
